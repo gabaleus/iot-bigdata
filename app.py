@@ -1,7 +1,12 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+
+from dotenv import load_dotenv
+import os
 from sqlalchemy import create_engine
+
+load_dotenv()
 
 # setando as configs da página
 st.set_page_config(
@@ -10,18 +15,11 @@ st.set_page_config(
 
 
 
-# conexão do banco de dados
-db_config = {
-    "dbname": "postgres",
-    "user": "postgres",
-    "password": "admin",
-    "host": "localhost",
-    "port": 5432,
-    # "database": "zen"
-}
+
 
 # criando a conexão
-connection_string = f"postgresql+psycopg2://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['dbname']}"
+connection_string = os.getenv('DATABASE_URL')
+DB_TABLE_NAME = 'data'
 
 # criando a engine, não faço ideia de como funciona
 engine = create_engine(connection_string)
@@ -33,7 +31,7 @@ df = pd.read_csv('IOT-temp.csv')
 df.to_sql('data', engine, if_exists='replace')
 
 # criando um select para pegar os dados do banco
-query = 'SELECT * FROM data'
+query = f"SELECT * FROM {DB_TABLE_NAME}"
 
 # pegando os dados do banco
 df_data = pd.read_sql(query, engine)
