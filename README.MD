@@ -19,12 +19,15 @@ cd 04_iot_bigdata_ia
 
 2. Instalar as Dependências Python
 pip install pandas psycopg2-binary sqlalchemy streamlit plotly
+as dependencias estão todas no requirements.txt  a execução do compose faz as instalações dentro o conteiner
 
 3. Configurar o Contêiner PostgreSQL com Docker
 Execute o seguinte comando para iniciar o contêiner PostgreSQL:
 
 docker run --name postgres-iot -e POSTGRES_PASSWORD=sua_senha -p 5432:5432 -d postgres
 Nota: Substitua sua_senha pela senha desejada.
+
+foi criado um serviço no docker-compose que cria o conteiner junto 
 
 Executando o Projeto
 1. Crie o banco de dados e tabela
