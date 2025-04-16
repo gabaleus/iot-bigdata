@@ -1,0 +1,25 @@
+version: '3.9' # Define a versão do Docker Compose
+
+services:
+  app:
+    build:
+      context: .  # Define o diretório atual como o contexto de construção
+      dockerfile: Dockerfile  # Especifica o Dockerfile a ser usado
+    container_name: app-container
+    working_dir: /app
+    volumes:
+      - .:/app  # Monta o diretório atual no contêiner
+    environment:
+      - DATABASE_URL=postgresql://postgres:senha@db:5432/postgres
+    command: python app.py  # Comando para rodar o app
+    depends_on:
+      - db  # Define que o app depende do banco de dados
+  db:
+    image: postgres:latest # Imagem do PostgreSQL
+    container_name: postgres-iot # Nome do contêiner
+    environment:
+      POSTGRES_USER: postgres # Define o nome do usuário
+      POSTGRES_PASSWORD: sua_senha # Define a senha para o banco
+      POSTGRES_DB: postgres # Define o nome do banco de dados
+    ports:
+      - "5432:5432" # Mapeia a porta 5432 do contêiner para o host

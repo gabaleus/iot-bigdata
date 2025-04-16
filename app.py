@@ -1,12 +1,9 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
-
-from dotenv import load_dotenv
 import os
 from sqlalchemy import create_engine
 
-load_dotenv()
 
 # setando as configs da página
 st.set_page_config(
